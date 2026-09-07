@@ -1,0 +1,11 @@
+{
+  "appId": "com.pokemonchampions.statlab",
+  "appName": "Pokémon Champions",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#f5f7fb"
+  }
+}

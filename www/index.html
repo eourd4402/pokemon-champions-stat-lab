@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#f5f7fb" name="theme-color"/>
+<meta content="Pokémon Champions Stat Lab" name="application-name"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Champions Stat Lab" name="apple-mobile-web-app-title"/>
+<link href="./manifest.webmanifest" rel="manifest"/>
+<link href="./icons/icon-180.png" rel="apple-touch-icon"/>
+<title>Pokémon Champions Stat Lab v19.0</title>
+<link href="./css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="app">
+<div class="topbar">
+<div class="title">
+<h1>Pokémon Stat Lab</h1>
+<p>PC에서는 좌우 분석 워크스페이스, 모바일에서는 접이식 샘플과 하단 메뉴로 같은 계산기를 사용합니다.</p>
+</div>
+<div class="pwa-top-actions"><span class="pwa-status app-version-status ready" id="appVersionStatus">v19.0</span>
+<button class="pwa-install-btn" hidden="" id="pwaInstallBtn" type="button">앱 설치</button>
+<span class="pwa-status" id="pwaStatus" title="PWA 상태">웹 실행</span>
+<div class="badge">Pokémon Champions · v19.0 · Clean</div>
+<span class="pwa-status offline-data-status" id="offlineDataStatus">오프라인 데이터 준비 중</span><span class="pwa-status app-update-status" id="appUpdateStatus">최신 버전 확인 중</span><button class="pwa-install-btn app-update-btn" hidden="True" id="applyAppUpdate" type="button">업데이트 적용</button></div>
+</div><div class="smart-install-bar" hidden="" id="smartInstallBar">
+<div class="smart-install-main">
+<strong id="smartInstallTitle">앱으로 설치</strong>
+<span id="smartInstallHint">현재 기기에 맞는 설치 방식을 안내합니다.</span>
+</div>
+<button id="smartInstallAction" type="button">앱으로 설치</button>
+<button aria-label="설치 안내 닫기" id="smartInstallDismiss" type="button">×</button>
+</div>
+<div class="layout">
+<aside class="panel sidebar" id="currentSamplePanel"><div class="mobile-persistent-sentinel" id="mobilePersistentSentinel"></div><div class="mobile-persistent-sample" id="mobilePersistentSample">
+<div class="mobile-persistent-main">
+<div class="mobile-persistent-title-row">
+<span class="mobile-persistent-label">현재 샘플</span>
+<strong id="mobilePersistentName">포켓몬 선택</strong>
+</div>
+<div class="mobile-persistent-meta" id="mobilePersistentMeta">성격 · 특성 · 도구</div>
+<div class="mobile-persistent-points" id="mobilePersistentPoints">H0 A0 B0 C0 D0 S0 · 0/66P</div>
+<div class="mobile-persistent-moves" id="mobilePersistentMoves"><span class="mobile-move-chip" data-move-slot="1">1. -</span><span class="mobile-move-chip" data-move-slot="2">2. -</span><span class="mobile-move-chip" data-move-slot="3">3. -</span><span class="mobile-move-chip" data-move-slot="4">4. -</span></div></div>
+<button aria-controls="mobileQuickEditor" aria-expanded="false" class="mobile-persistent-edit" id="mobilePersistentEdit" type="button">수정</button>
+<div class="mobile-quick-editor" hidden="True" id="mobileQuickEditor">
+<div class="mobile-quick-head">
+<div>
+<strong>현재 샘플 빠른 수정</strong>
+<span>분석 화면을 벗어나지 않고 즉시 반영</span>
+</div>
+<button aria-label="빠른 수정 닫기" class="mobile-quick-close" id="mobileQuickClose" type="button">×</button>
+</div>
+<label class="mobile-quick-field mobile-quick-form-field">
+<span>폼 / 메가진화</span>
+<select data-source-select="pokemonForm" id="mobileQuickForm"></select>
+<small id="mobileQuickMegaNote">메가폼 선택 시 메가스톤 자동 장착</small>
+</label><div class="mobile-quick-two">
+<label class="mobile-quick-field">
+<span>성격</span>
+<select data-source-select="nature" id="mobileQuickNature"></select>
+</label>
+<label class="mobile-quick-field">
+<span>특성</span>
+<select data-source-select="sampleAbility" id="mobileQuickAbility"></select>
+</label>
+</div>
+<label class="mobile-quick-field mobile-quick-item">
+<span>지닌 도구</span>
+<select data-source-select="heldItem" id="mobileQuickItem"></select>
+</label>
+<div class="mobile-quick-section-head">
+<strong>능력 P</strong>
+<span id="mobileQuickBudget">사용 0/66P</span>
+</div>
+<div class="mobile-quick-points">
+<label><span>H</span><input data-stat-key="hp" id="mobileQuickPointHp" inputmode="numeric" max="32" min="0" step="1" type="number"/></label>
+<label><span>A</span><input data-stat-key="atk" id="mobileQuickPointAtk" inputmode="numeric" max="32" min="0" step="1" type="number"/></label>
+<label><span>B</span><input data-stat-key="def" id="mobileQuickPointDef" inputmode="numeric" max="32" min="0" step="1" type="number"/></label>
+<label><span>C</span><input data-stat-key="spa" id="mobileQuickPointSpa" inputmode="numeric" max="32" min="0" step="1" type="number"/></label>
+<label><span>D</span><input data-stat-key="spd" id="mobileQuickPointSpd" inputmode="numeric" max="32" min="0" step="1" type="number"/></label>
+<label><span>S</span><input data-stat-key="spe" id="mobileQuickPointSpe" inputmode="numeric" max="32" min="0" step="1" type="number"/></label>
+</div>
+<div class="mobile-quick-section-head mobile-quick-move-head">
+<strong>기술</strong>
+<span>4개 모두 바로 변경</span>
+</div>
+<div class="mobile-quick-moves">
+<label><span>1</span><input aria-autocomplete="list" aria-controls="mobileQuickMoveSearch1Helper" aria-label="빠른 수정 기술 1 검색" autocomplete="off" class="mobile-quick-move-search" data-search-helper-kind="move" id="mobileQuickMoveSearch1" placeholder="검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="mobileQuickMoveSearch1" hidden="" id="mobileQuickMoveSearch1Helper" role="listbox"></div><select data-source-select="sampleMove1" id="mobileQuickMove1"></select></label>
+<label><span>2</span><input aria-autocomplete="list" aria-controls="mobileQuickMoveSearch2Helper" aria-label="빠른 수정 기술 2 검색" autocomplete="off" class="mobile-quick-move-search" data-search-helper-kind="move" id="mobileQuickMoveSearch2" placeholder="검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="mobileQuickMoveSearch2" hidden="" id="mobileQuickMoveSearch2Helper" role="listbox"></div><select data-source-select="sampleMove2" id="mobileQuickMove2"></select></label>
+<label><span>3</span><input aria-autocomplete="list" aria-controls="mobileQuickMoveSearch3Helper" aria-label="빠른 수정 기술 3 검색" autocomplete="off" class="mobile-quick-move-search" data-search-helper-kind="move" id="mobileQuickMoveSearch3" placeholder="검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="mobileQuickMoveSearch3" hidden="" id="mobileQuickMoveSearch3Helper" role="listbox"></div><select data-source-select="sampleMove3" id="mobileQuickMove3"></select></label>
+<label><span>4</span><input aria-autocomplete="list" aria-controls="mobileQuickMoveSearch4Helper" aria-label="빠른 수정 기술 4 검색" autocomplete="off" class="mobile-quick-move-search" data-search-helper-kind="move" id="mobileQuickMoveSearch4" placeholder="검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="mobileQuickMoveSearch4" hidden="" id="mobileQuickMoveSearch4Helper" role="listbox"></div><select data-source-select="sampleMove4" id="mobileQuickMove4"></select></label>
+</div>
+<button class="mobile-quick-full-edit" id="mobileQuickFullEdit" type="button">포켓몬 · 폼 등 전체 편집</button>
+</div><div class="mobile-app-update-bar" id="mobileAppUpdateBar">
+<span class="mobile-version-chip" id="mobileVersionStatus">v19.0</span>
+<span class="mobile-update-text" id="mobileUpdateStatus">최신 버전 확인 중</span>
+<button class="mobile-update-btn" hidden="" id="mobileApplyUpdate" type="button">업데이트</button>
+</div></div><div aria-hidden="true" class="mobile-persistent-placeholder" id="mobilePersistentPlaceholder"></div><div class="mobile-sample-body"><div class="mobile-sample-tab-title">현재 샘플 편집</div>
+<div class="sample-title-row">
+<div class="section-title">현재 샘플</div>
+<div class="sample-fixed-chip">Lv.50 · IV31 고정</div>
+</div>
+<div class="field">
+<label for="pokemonSearch">포켓몬 검색</label>
+<input aria-autocomplete="list" aria-controls="pokemonSearchHelper" autocomplete="off" data-search-helper-kind="pokemon" id="pokemonSearch" placeholder="한글/영문 이름 검색" type="text"/><div aria-label="포켓몬 후보" class="search-helper" data-for="pokemonSearch" hidden="" id="pokemonSearchHelper" role="listbox"></div>
+</div>
+<div class="field">
+<label for="pokemon">포켓몬 · Champions 208종</label>
+<select id="pokemon"></select>
+</div>
+<div class="field form-field">
+<label for="pokemonForm">폼 / 메가진화</label>
+<select id="pokemonForm">
+<option value="base">기본</option>
+</select>
+<div class="mega-note" id="megaNote">메가진화 가능 시 메가폼을 선택할 수 있으며, 선택하면 대응 메가스톤이 자동 장착됩니다.</div>
+</div>
+<div class="pokemon-card">
+<div class="pokemon-name" id="pokemonName">-</div>
+<div class="sub" id="pokemonBaseSummary">종족값을 불러오는 중</div>
+</div>
+<div class="sample-inline-grid">
+<div class="field">
+<label for="nature">성격</label>
+<select id="nature"></select>
+</div>
+<div class="field">
+<label for="sampleAbility">특성</label>
+<select id="sampleAbility"><option value="none">데이터 로드 중…</option></select>
+</div>
+</div>
+<div class="sample-item-note" id="sampleAbilityNote">선택 포켓몬의 실제 특성을 표시합니다.</div>
+<div class="field" style="margin-top:9px">
+<label for="heldItem">지닌 도구</label>
+<div class="sample-item-search">
+<input aria-autocomplete="list" aria-controls="sampleItemSearchHelper" autocomplete="off" data-search-helper-kind="item" id="sampleItemSearch" placeholder="도구 한글/영문 검색" type="search"/><div aria-label="도구 후보" class="search-helper" data-for="sampleItemSearch" hidden="" id="sampleItemSearchHelper" role="listbox"></div>
+<span class="sample-item-count" id="sampleItemCount">로딩 중</span>
+</div>
+<select id="heldItem"></select>
+<div class="item-effect-note" id="heldItemNote">Champions 사용 가능 도구를 불러오는 중입니다.</div>
+</div>
+<div class="sample-budget">
+<div class="sample-budget-head">
+<strong>능력 포인트 · 실능치</strong>
+<span class="sample-budget-summary" id="evCompact">
+            사용 <b id="evUsed">0</b>/66P · 남음 <b id="evRemain">66</b>P
+          </span>
+</div>
+<div class="sample-stat-wrap">
+<table class="sample-stat-table">
+<thead>
+<tr>
+<th>능력치</th>
+<th>종족값</th>
+<th>IV</th>
+<th>능력 P</th>
+<th>성격</th>
+<th>실능치</th>
+<th>목표</th>
+<th>최소P</th>
+</tr>
+</thead>
+<tbody id="statsBody"></tbody>
+</table>
+</div>
+<div class="sample-budget-note" id="evNote">각 능력치 최대 32P · 총 66P.</div>
+</div>
+<div class="sample-moves">
+<div class="sample-moves-head">
+<strong>기술배치</strong>
+<span>현재는 전체 기술 목록</span>
+</div>
+<div class="sample-move-grid">
+<input aria-autocomplete="list" aria-controls="sampleMoveSearch1Helper" aria-label="기술 1 검색" autocomplete="off" class="sample-move-search" data-search-helper-kind="move" id="sampleMoveSearch1" placeholder="기술명 검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="sampleMoveSearch1" hidden="" id="sampleMoveSearch1Helper" role="listbox"></div><select id="sampleMove1"><option value="">기술 1</option></select>
+<input aria-autocomplete="list" aria-controls="sampleMoveSearch2Helper" aria-label="기술 2 검색" autocomplete="off" class="sample-move-search" data-search-helper-kind="move" id="sampleMoveSearch2" placeholder="기술명 검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="sampleMoveSearch2" hidden="" id="sampleMoveSearch2Helper" role="listbox"></div><select id="sampleMove2"><option value="">기술 2</option></select>
+<input aria-autocomplete="list" aria-controls="sampleMoveSearch3Helper" aria-label="기술 3 검색" autocomplete="off" class="sample-move-search" data-search-helper-kind="move" id="sampleMoveSearch3" placeholder="기술명 검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="sampleMoveSearch3" hidden="" id="sampleMoveSearch3Helper" role="listbox"></div><select id="sampleMove3"><option value="">기술 3</option></select>
+<input aria-autocomplete="list" aria-controls="sampleMoveSearch4Helper" aria-label="기술 4 검색" autocomplete="off" class="sample-move-search" data-search-helper-kind="move" id="sampleMoveSearch4" placeholder="기술명 검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="sampleMoveSearch4" hidden="" id="sampleMoveSearch4Helper" role="listbox"></div><select id="sampleMove4"><option value="">기술 4</option></select>
+</div>
+</div>
+</div></aside>
+<main class="content">
+<details class="analysis-fold" id="quickGuideFold">
+<summary>
+<span class="analysis-fold-title">
+<strong>간단 사용법</strong>
+<span>샘플 설정 → 필요한 분석 펼치기 → 최소 능력 포인트를 현재 샘플에 반영</span>
+</span>
+</summary>
+<div class="quick-guide"><div class="mobile-guide-note">모바일에서는 현재 샘플 요약이 화면 상단에 항상 표시됩니다. 하단의 샘플·도감·보관함·내구·공격·속도 탭을 누르면 해당 화면 하나로 바로 전환됩니다.</div>
+<div class="quick-guide-flow">
+<div class="quick-guide-step">
+<span class="num">1</span>
+<strong>왼쪽에서 현재 샘플 설정</strong>
+<p>포켓몬·폼·성격·특성·지닌 도구·능력 포인트·기술 4개를 설정합니다. 완성한 샘플은 오른쪽 ‘샘플 보관함’의 6개 슬롯에 저장할 수 있습니다.</p>
+</div>
+<div class="quick-guide-step">
+<span class="num">2</span>
+<strong>오른쪽에서 필요한 분석만 펼치기</strong>
+<p>도감·샘플 보관함·내구·공격·스피드 중 필요한 항목만 펼칩니다. 도감에서는 타입과 메가진화 조건을 겹쳐 검색하고, 보관함에서는 저장된 6마리의 구성·타입 상성·공격 커버리지를 확인합니다.</p>
+</div>
+<div class="quick-guide-step">
+<span class="num">3</span>
+<strong>결과를 샘플에 반영</strong>
+<p>최소 H/B/D, A/C, S 능력 포인트를 확인하고 필요하면 적용 버튼을 눌러 왼쪽 현재 샘플에 바로 반영합니다.</p>
+</div>
+</div>
+<div class="quick-guide-analysis">
+<div>
+<b>내구 분석</b>
+              상대의 기술을 1·2·3회 버티는지 확인하고, 스텔스록·압정·날씨·아이템 등을 포함해 필요한 최소 H/B/D를 계산합니다.
+            </div>
+<div>
+<b>공격 분석</b>
+              현재 샘플의 기술 피해와 확정/난수 타수를 확인합니다. H0/H2/H32/풀내구 기준선으로 타겟 범위를 잡고, 특정 상대는 H/B/D·성격·도구·특성·함정까지 상세 설정해 최소 A/C를 역산합니다.
+            </div>
+<div>
+<b>스피드 분석</b>
+              준속·최속·무보정 기준선과 비교해 특정 포켓몬을 추월하기 위한 최소 S 능력 포인트를 계산합니다.
+            </div>
+</div>
+<div class="quick-guide-note">
+            도구와 특성은 왼쪽 현재 샘플의 값을 기준으로 계산됩니다. 일부 가변 위력 기술이나 아직 자동 지원되지 않는 효과는 각 계산 영역에서 별도로 경고합니다.
+          </div>
+</div>
+</details>
+<details class="analysis-fold" id="pokedexFold">
+<summary>
+<span class="analysis-fold-title">
+<strong>Champions 포켓몬 도감</strong>
+<span>208종 전체 목록 · 타입 중복 · 공격 성향 · 메가진화 가능 필터</span>
+</span>
+</summary><div class="mobile-tab-screen-title"><div><strong>포켓몬 도감</strong><span>타입·공격 성향·메가진화 조건을 겹쳐서 찾기</span></div></div>
+<section class="panel pokedex-panel">
+<h3>Champions 포켓몬 도감</h3>
+<p class="pokedex-intro">Pokémon Champions에서 사용할 수 있는 기본 포켓몬을 나열합니다. 타입·공격 성향·메가진화 가능 조건을 함께 적용할 수 있습니다.</p>
+<div class="pokedex-toolbar">
+<input aria-label="도감 포켓몬 이름 검색" autocomplete="off" class="pokedex-search" id="pokedexSearch" placeholder="포켓몬 한글 / 영문 이름 검색" type="search"/>
+<button class="pokedex-reset" id="pokedexReset" type="button">필터 초기화</button>
+</div>
+<div class="pokedex-filter-group">
+<div class="pokedex-filter-head"><strong>타입 필터</strong><span>여러 타입을 동시에 선택할 수 있습니다.</span></div>
+<div aria-label="포켓몬 타입 필터" class="pokedex-type-filters" id="pokedexTypeFilters"></div>
+<div class="pokedex-filter-head pokedex-filter-subhead"><strong>공격 성향 필터</strong><span>여러 개 선택 시 하나라도 해당하면 표시됩니다.</span></div>
+<div aria-label="포켓몬 공격 성향 필터" class="pokedex-offense-filters" id="pokedexOffenseFilters"></div>
+<p class="pokedex-filter-rule">공격형: A≥100·A−C≥20 / 특수형: C≥100·C−A≥20 / 쌍두형: A·C≥90·차이&lt;20</p>
+<div class="pokedex-special-filters">
+<button aria-pressed="false" class="pokedex-filter-chip" id="pokedexMegaFilter" type="button">메가진화 가능</button>
+</div>
+</div>
+<div aria-live="polite" class="pokedex-summary" id="pokedexSummary"><strong>전체 208종</strong><span>타입 데이터 준비 중</span></div>
+<div class="pokedex-grid" id="pokedexGrid"></div>
+</section>
+</details>
+<details class="analysis-fold" id="sampleVaultFold">
+<summary>
+<span class="analysis-fold-title">
+<strong>샘플 보관함 · 6마리</strong>
+<span>6개 샘플 저장·불러오기 · 파티 전체 요약 · 타입 상성 · 공격 커버리지</span>
+</span>
+</summary><div class="mobile-tab-screen-title"><div><strong>샘플 보관함 · 파티</strong><span>6마리 저장·불러오기와 파티 분석</span></div></div>
+<div class="sample-vault">
+<p class="sample-vault-note">
+            왼쪽에서 만든 포켓몬 샘플을 최대 6개까지 저장합니다. 슬롯을 선택하면 아래에 저장 내용을 표시하고,
+            불러오면 왼쪽 현재 샘플과 모든 분석 계산기가 해당 샘플 기준으로 전환됩니다.
+          </p>
+<div class="sample-vault-grid" id="sampleVaultGrid"></div>
+<div class="sample-vault-detail">
+<div class="sample-vault-detail-head">
+<div>
+<strong id="sampleVaultDetailTitle">슬롯 1 · 빈 슬롯</strong>
+<span id="sampleVaultDetailMeta">현재 왼쪽 샘플을 저장할 수 있습니다.</span>
+</div>
+</div>
+<div class="sample-vault-detail-body">
+<div class="sample-vault-stats" id="sampleVaultStats"></div>
+<div class="sample-vault-detail-moves" id="sampleVaultMoves"></div>
+<div class="sample-vault-actions">
+<button class="primary" id="sampleVaultSave" type="button">현재 샘플 저장</button>
+<button disabled="" id="sampleVaultLoad" type="button">선택 샘플 불러오기</button>
+<button class="danger" disabled="" id="sampleVaultClear" type="button">슬롯 비우기</button>
+</div><div aria-live="polite" class="sample-vault-save-status" id="sampleVaultStatus"></div>
+<div class="sample-vault-storage-note">
+                저장 데이터: 포켓몬·폼·성격·특성·지닌 도구·H/A/B/C/D/S 능력 포인트·기술 4개.
+                같은 HTML 파일을 다시 열거나 새로고침해도 브라우저 저장소에 유지됩니다.
+              </div>
+</div>
+</div>
+<div class="party-inside-vault-head"><strong>저장된 6마리 파티 분석</strong><span>아래 분석은 위 샘플 보관함의 6개 슬롯을 그대로 사용합니다.</span></div><div class="party-analysis">
+<p class="party-analysis-note">
+            ‘샘플 보관함’에 저장한 최대 6마리를 하나의 파티로 보고 객관적인 구성 정보를 정리합니다.
+            자동 추천이나 교체 제안은 하지 않습니다.
+          </p>
+<div class="party-section">
+<div class="party-section-head">
+<strong>파티 전체 요약</strong>
+<span>포켓몬·성격·특성·도구·능력 포인트·Lv.50 실능치·기술 4개</span>
+</div>
+<div class="party-overview-grid" id="partyOverviewGrid"></div>
+</div>
+<div class="party-section">
+<div class="party-section-head">
+<strong>파티 타입 상성표</strong>
+<span>각 포켓몬이 18개 공격 타입을 받을 때의 순수 타입 배율만 표시합니다.</span>
+</div>
+<div class="party-type-scroll">
+<table class="party-type-table">
+<thead id="partyTypeHead"></thead>
+<tbody id="partyTypeBody"></tbody>
+</table>
+</div>
+<div class="party-analysis-footnote">
+              타입 상성표는 포켓몬의 타입 자체만 비교합니다. 특성·도구·날씨처럼 실제 피해를 바꾸는 조건은 포함하지 않습니다.
+            </div>
+</div>
+<div class="party-section">
+<div class="party-section-head">
+<strong>공격 타입 커버리지</strong>
+<span>저장된 최대 24개 기술 중 공격기만 사용해 18개 단일 타입 상대에 대한 최고 상성 배율을 계산합니다.</span>
+</div>
+<div class="party-coverage-grid" id="partyCoverageGrid"></div>
+<div class="party-analysis-footnote">
+              상성 커버리지 기능은 기술의 타입 배율만 비교하며 실제 공격/특공, 위력, 자속, 도구, 특성, 상대 내구는 반영하지 않습니다.
+              Freeze-Dry처럼 현재 타입 계산기에 별도 처리된 기술은 해당 규칙을 사용합니다.
+            </div>
+</div>
+</div></div>
+</details>
+<details class="analysis-fold" data-durability-view="own" id="durabilityFold">
+<summary>
+<span class="analysis-fold-title">
+<strong>내구 분석</strong>
+<span>상대 공격 · 1/2/3회 생존 · 함정 · HP/HBD 역산</span>
+</span>
+</summary><div class="mobile-tab-screen-title"><div><strong>내구 분석</strong><span>내 포켓몬 순수 내구를 먼저 확인하고 필요할 때 공격 버티기 계산으로 전환</span></div></div>
+<section class="panel durability-panel">
+<div class="durability-head">
+<div>
+<h3>내구 분석</h3>
+<p>목적에 따라 상대 공격을 몇 타 버티는지 계산하거나, 현재 샘플의 순수 물리·특수내구만 따로 확인합니다.</p>
+</div>
+<div class="durability-formula">내구지수 = HP 실능치 × 방어/특방 실능치</div>
+</div><div aria-label="내구 분석 보기 방식" class="purpose-switch durability-purpose-switch" id="durabilityModeSwitch" role="tablist">
+<button aria-selected="true" class="purpose-tab active" data-durability-mode="own" role="tab" type="button">
+<strong>내 포켓몬 내구</strong>
+<span>물리/특수 내구지수 · HP 배수</span>
+</button><button aria-selected="false" class="purpose-tab" data-durability-mode="survive" role="tab" type="button">
+<strong>공격 버티기</strong>
+<span>상대 공격 · 피해 · 1/2/3타 생존</span>
+</button></div>
+<div class="attack-benchmark durability-mode-view durability-survive-view" id="durabilitySurviveView">
+<div class="attack-benchmark-head">
+<div>
+<h4>상대 공격 · 버티는 타수</h4>
+<p>상대 공격 조건을 정한 뒤 현재 피해와 1/2/3타 생존 여부, 필요한 H/B/D 최소 투자를 한 번에 계산합니다.</p>
+</div>
+<div class="attack-benchmark-badge">결정력 + 실제 피해 비교</div>
+</div>
+<div class="attack-benchmark-grid">
+<div class="attack-controls">
+<div class="attack-control-grid">
+<div class="wide">
+<label for="attackPokemonSearch">상대 포켓몬 검색</label>
+<input aria-autocomplete="list" aria-controls="attackPokemonSearchHelper" autocomplete="off" data-search-helper-kind="battlePokemon" id="attackPokemonSearch" placeholder="한글 또는 영문 포켓몬명 검색" type="search"/><div aria-label="포켓몬 후보" class="search-helper" data-for="attackPokemonSearch" hidden="" id="attackPokemonSearchHelper" role="listbox"></div>
+</div>
+<div class="wide">
+<label for="attackPokemonSelect">상대 포켓몬</label>
+<select id="attackPokemonSelect"></select>
+</div>
+<div class="wide">
+<label for="attackMoveSearch">기술 검색</label>
+<input aria-autocomplete="list" aria-controls="attackMoveSearchHelper" autocomplete="off" data-search-helper-kind="move" id="attackMoveSearch" placeholder="한글 또는 영문 기술명 검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="attackMoveSearch" hidden="" id="attackMoveSearchHelper" role="listbox"></div>
+</div>
+<div class="wide">
+<label for="attackMoveSelect">기술</label>
+<select id="attackMoveSelect"><option value="">기술 데이터를 불러오는 중…</option></select>
+<div class="mega-note">한글/영문 검색 지원 · 현재는 전체 공격 기술 검색입니다. 특수 위력 계산 기술은 경고로 표시합니다.</div>
+</div><div class="spread-damage-control"><label class="spread-damage-toggle"><input id="attackSpread" type="checkbox"/> 더블배틀 분산 데미지 ×0.75</label><div class="spread-damage-note" id="attackSpreadNote">광역기가 동시에 2마리 이상을 공격할 때 체크합니다.</div></div>
+<div class="wide attack-inline">
+<div>
+<label for="attackNature">공격 성격</label>
+<select id="attackNature">
+<option value="1">무보정 ×1.0</option>
+<option value="1.1">상승 ×1.1</option>
+<option value="0.9">하락 ×0.9</option>
+</select>
+</div>
+<div>
+<label for="attackPoints">공격 능력 포인트</label>
+<input id="attackPoints" max="32" min="0" step="1" type="number" value="32"/>
+</div>
+<div>
+<label for="attackRank">공격 랭크</label>
+<select id="attackRank"></select>
+</div>
+</div>
+<div class="wide">
+<label for="attackItem">상대 지닌 도구</label>
+<select id="attackItem"></select>
+<div class="item-effect-note" id="attackItemNote">도구 효과 없음</div>
+</div>
+</div>
+<details class="attack-detail">
+<summary>상세 전투 조건 · 시작 HP / 함정 / 특성 / 날씨 / 벽 / 급소 / 연속기</summary>
+<div class="attack-detail-grid">
+<div class="combat-subsection">공격자 조건</div>
+<div>
+<label for="attackerAbility">상대 특성</label>
+<select id="attackerAbility"></select>
+</div>
+<div>
+<label for="attackerStatus">상대 상태</label>
+<select id="attackerStatus">
+<option value="none">정상</option>
+<option value="burn">화상</option>
+<option value="poison">독</option>
+<option value="paralysis">마비</option>
+</select>
+</div>
+<div>
+<label for="attackerGrounded">공격자 접지</label>
+<select id="attackerGrounded">
+<option value="auto">자동</option>
+<option value="grounded">접지</option>
+<option value="airborne">비접지</option>
+</select>
+</div>
+<label class="compact-check">
+<input checked="" id="attackAutoStab" type="checkbox"/>
+                    자속 자동 적용
+                  </label>
+<label class="compact-check">
+<input id="attackCritical" type="checkbox"/>
+                    급소 기준
+                  </label>
+<div>
+<label for="attackExtraMultiplier">기타 공격 보정</label>
+<input id="attackExtraMultiplier" max="4" min="0.1" step="0.05" type="number" value="1"/>
+</div>
+<div>
+<label for="multiHitCount">기술 1회당 타수</label>
+<select id="multiHitCount"><option value="1">1회</option></select>
+</div>
+<div>
+<label for="foulPlayTargetRank">속임수 대상 공격 랭크</label>
+<select id="foulPlayTargetRank"></select>
+</div>
+<div class="combat-subsection">내 포켓몬 조건</div>
+<div>
+<label for="defenderAbilityDisplay">내 특성</label>
+<input id="defenderAbilityDisplay" readonly="" type="text" value="샘플 특성 사용"/>
+</div>
+<div>
+<label for="defenderRank">방어/특방 랭크</label>
+<select id="defenderRank"></select>
+</div>
+<div>
+<label for="defenderGrounded">내 포켓몬 접지</label>
+<select id="defenderGrounded">
+<option value="auto">자동</option>
+<option value="grounded">접지</option>
+<option value="airborne">비접지</option>
+</select>
+</div>
+<div>
+<label for="startHpPercent">진입 전 HP</label>
+<input id="startHpPercent" max="100" min="1" step="1" type="number" value="100"/>
+</div>
+<label class="compact-check">
+<input id="stealthRock" type="checkbox"/>
+                    스텔스록
+                  </label>
+<div>
+<label for="spikesLayers">압정</label>
+<select id="spikesLayers">
+<option value="0">없음</option>
+<option value="1">1장 · 1/8</option>
+<option value="2">2장 · 1/6</option>
+<option value="3">3장 · 1/4</option>
+</select>
+</div>
+<div class="combat-subsection">필드 조건</div>
+<div>
+<label for="battleWeather">날씨</label>
+<select id="battleWeather">
+<option value="none">없음</option>
+<option value="sun">쾌청</option>
+<option value="rain">비</option>
+<option value="sand">모래바람</option>
+<option value="snow">설경</option>
+</select>
+</div>
+<div>
+<label for="battleTerrain">필드</label>
+<select id="battleTerrain">
+<option value="none">없음</option>
+<option value="electric">일렉트릭필드</option>
+<option value="grassy">그래스필드</option>
+<option value="psychic">사이코필드</option>
+<option value="misty">미스트필드</option>
+</select>
+</div>
+<div>
+<label for="battleScreen">벽</label>
+<select id="battleScreen">
+<option value="none">없음</option>
+<option value="reflect">리플렉터</option>
+<option value="lightscreen">빛의장막</option>
+<option value="auroraveil">오로라베일</option>
+</select>
+</div>
+<div class="wide">
+<label>현재 방어 타입</label>
+<input id="defenderTypeDisplay" readonly="" type="text" value="-"/>
+</div>
+</div>
+</details>
+</div>
+<div class="attack-results">
+<div class="attack-result-card">
+<div class="caption">사용 공격 능력치</div>
+<div class="big" id="attackActualStat">-</div>
+<div class="sub" id="attackStatDetail">상대를 선택하세요</div>
+</div>
+<div class="attack-result-card primary">
+<div class="caption">결정력 · 상성 제외</div>
+<div class="big" id="attackPowerIndex">-</div>
+<div class="sub" id="attackPowerDetail">공격 실능치 × 기술 위력 × 보정</div>
+</div>
+<div class="defense-item-card">
+<div class="defense-item-title">
+<div>
+<div class="caption">샘플 지닌 도구</div>
+<strong id="defenseItemDisplay">없음</strong>
+</div>
+</div>
+<div class="item-effect-note" id="defenseItemNote">내구 도구 없음</div>
+<div class="berry-once-note" id="berryOnceNote">
+                  소모성 열매는 조건을 만족한 최초 1회만 발동하며, 이후 2·3타에는 다시 적용되지 않습니다.
+                </div>
+</div>
+<div class="entry-state-card">
+<div class="caption">전투 진입 상태</div>
+<div class="entry-state-grid">
+<div>최대 HP<b id="entryMaxHp">-</b></div>
+<div>함정 적용 후 시작 HP<b id="entryCurrentHp">-</b></div>
+<div>진입 피해<b id="entryHazardDamage">-</b></div>
+</div>
+<div class="mechanic-chip-line" id="entryMechanicChips"></div>
+</div>
+<div class="attack-result-card damage">
+<div class="damage-line">
+<div>
+<div class="caption">현재 내 포켓몬이 받는 피해</div>
+<div class="big" id="attackDamageRange">-</div>
+<div class="sub" id="attackDamagePercent">-</div>
+</div>
+<div class="damage-badges">
+<div class="type-multiplier-badge neutral" id="attackTypeMultiplier">받는 배율 ×1</div>
+<div class="damage-judge" id="attackDamageJudge">-</div>
+</div>
+</div>
+</div>
+<div class="survive-box">
+<div class="survive-head">
+<h5>이 공격을 확정으로 버티려면</h5>
+<div class="survive-extra-controls">
+<label>
+<span>생존 기준</span>
+<select id="surviveHits">
+<option value="1">1타 버티기</option>
+<option value="2">2타 버티기</option>
+<option value="3">3타 버티기</option>
+</select>
+</label>
+<label>
+<span>추가 턴 종료 피해</span>
+<select id="residualEffect">
+<option value="none">없음</option>
+<option value="fixed16">추가 고정 피해 · 1/16</option>
+<option value="fixed8">추가 고정 피해 · 1/8</option>
+</select>
+</label>
+</div>
+</div>
+<div class="survive-hit-range" id="surviveHitRange">선택한 타수의 누적 피해 범위: -</div>
+<div class="survive-options">
+<div class="survive-option">
+<b>HP만 추가</b>
+<span id="surviveHpOnly">-</span>
+</div>
+<div class="survive-option">
+<b id="surviveDefenseLabel">방어만 추가</b>
+<span id="surviveDefenseOnly">-</span>
+</div>
+<div class="survive-option">
+<b>최소 추가 포인트 조합</b>
+<span id="surviveMixed">-</span>
+</div>
+</div>
+</div>
+<div class="attack-warning" id="attackWarning">
+                단일타격 기본 계산입니다. 특수한 위력 변동 기술·특성 전용 계산은 상세 지원 전까지 결과가 달라질 수 있습니다.
+              </div>
+</div>
+</div>
+</div>
+<div class="durability-mode-view durability-own-view" id="durabilityOwnView"><div class="purpose-section-intro">
+<div>
+<strong>내 포켓몬 내구</strong>
+<span>상대 기술 조건 없이 현재 샘플 자체의 물리·특수내구와 HP 투자 효율만 확인합니다.</span>
+</div>
+</div><div class="durability-grid">
+<div class="durability-card">
+<div class="durability-card-top">
+<div class="durability-title">
+                물리내구
+                <span>물리 공격을 버티는 기본 지표</span>
+</div>
+<div class="durability-index">
+<span class="label">현재 내구지수</span>
+<strong id="physicalBulkIndex">-</strong>
+</div>
+</div>
+<div class="durability-breakdown">
+<div class="durability-stat"><span>HP</span><b id="physicalHp">-</b></div>
+<div class="durability-times">×</div>
+<div class="durability-stat"><span>방어</span><b id="physicalDef">-</b></div>
+</div>
+<div class="durability-progress-line">
+<span>무투자 → 최대투자 범위</span>
+<strong class="durability-gain" id="physicalGain">-</strong>
+</div>
+<div class="durability-track"><div class="durability-fill" id="physicalBulkBar"></div></div>
+<div class="durability-meta">
+<span id="physicalEv">H0 / B0</span>
+<span id="physicalRange">무투자 - / 최대 -</span>
+</div>
+<div class="efficiency-box">
+<div class="efficiency-title">다음 1포인트를 어디에 넣을까?</div>
+<div class="efficiency-options">
+<div class="efficiency-option"><b>HP +1</b><span id="physicalHpNext">-</span></div>
+<div class="efficiency-option"><b>방어 +1</b><span id="physicalDefNext">-</span></div>
+</div>
+<div class="efficiency-recommend" id="physicalEfficiency">-</div>
+</div>
+</div>
+<div class="durability-card">
+<div class="durability-card-top">
+<div class="durability-title">
+                특수내구
+                <span>특수 공격을 버티는 기본 지표</span>
+</div>
+<div class="durability-index">
+<span class="label">현재 내구지수</span>
+<strong id="specialBulkIndex">-</strong>
+</div>
+</div>
+<div class="durability-breakdown">
+<div class="durability-stat"><span>HP</span><b id="specialHp">-</b></div>
+<div class="durability-times">×</div>
+<div class="durability-stat"><span>특방</span><b id="specialSpd">-</b></div>
+</div>
+<div class="durability-progress-line">
+<span>무투자 → 최대투자 범위</span>
+<strong class="durability-gain" id="specialGain">-</strong>
+</div>
+<div class="durability-track"><div class="durability-fill" id="specialBulkBar"></div></div>
+<div class="durability-meta">
+<span id="specialEv">H0 / D0</span>
+<span id="specialRange">무투자 - / 최대 -</span>
+</div>
+<div class="efficiency-box">
+<div class="efficiency-title">다음 1포인트를 어디에 넣을까?</div>
+<div class="efficiency-options">
+<div class="efficiency-option"><b>HP +1</b><span id="specialHpNext">-</span></div>
+<div class="efficiency-option"><b>특방 +1</b><span id="specialSpdNext">-</span></div>
+</div>
+<div class="efficiency-recommend" id="specialEfficiency">-</div>
+</div>
+</div>
+</div><div class="hp-helper">
+<div class="hp-helper-head">
+<strong>HP 배수 도우미</strong>
+<span>4N · 8N · 16N 지점만 보여줍니다.<br/>현재 H에서 가장 가까운 방향(-P / +P)을 표시하고 바로 적용할 수 있습니다.</span>
+</div>
+<div class="hp-fractions">
+<div class="hp-fraction">현재 HP의 1/4<b id="hpQuarter">-</b></div>
+<div class="hp-fraction">현재 HP의 1/8<b id="hpEighth">-</b></div>
+<div class="hp-fraction">현재 HP의 1/16<b id="hpSixteenth">-</b></div>
+</div>
+<div class="hp-break-grid" id="hpBreakGrid"></div>
+</div><div class="durability-note">
+          이 수치는 상대 기술의 위력·공격 실능치·타입·특성 등을 넣기 전의 <b>순수 내구 비교용 지표</b>입니다.
+          같은 포켓몬 안에서 H/B/D 능력 포인트 배분을 바꿨을 때 내구가 얼마나 달라지는지 비교하는 용도로 사용합니다.
+        </div></div>
+</section>
+</details>
+<details class="analysis-fold" data-offense-view="detail" id="offenseFold">
+<summary>
+<span class="analysis-fold-title">
+<strong>공격 분석</strong>
+<span>내 기술 피해 · 확정/난수 타수 · 최소 A/C 역산</span>
+</span>
+</summary><div class="mobile-tab-screen-title"><div><strong>공격 분석</strong><span>내 포켓몬 설정 아래에서 상대 상세 계산 또는 내구 기준선을 선택</span></div></div>
+<section class="panel offense-panel">
+<div class="offense-head">
+<div>
+<h3>공격 분석</h3>
+<p>내 공격 설정은 공통으로 유지하고, 실제 상대 상세 계산과 포켓몬 내구 기준선 비교 중 필요한 기능만 선택해 봅니다.</p>
+</div>
+<div class="offense-badge">결정력 · 실제 피해 · 최소 A/C 역산</div>
+</div>
+<div class="offense-grid offense-common-grid">
+<div class="offense-box offense-own-attack-box">
+<h4>내 공격 설정</h4>
+<p>내 포켓몬은 왼쪽에서 선택한 현재 샘플을 사용합니다. 기술에 따라 공격/특공이 자동 선택됩니다.</p>
+<div class="offense-form-grid">
+<div class="wide">
+<label for="offenseMoveSearch">기술 검색</label>
+<input aria-autocomplete="list" aria-controls="offenseMoveSearchHelper" autocomplete="off" data-search-helper-kind="move" id="offenseMoveSearch" placeholder="한글 또는 영문 기술명 검색" type="search"/><div aria-label="기술 후보" class="search-helper" data-for="offenseMoveSearch" hidden="" id="offenseMoveSearchHelper" role="listbox"></div>
+</div>
+<div class="wide">
+<label for="offenseMoveSelect">기술</label>
+<select id="offenseMoveSelect"><option value="">기술 데이터를 불러오는 중…</option></select>
+<div class="mega-note">현재는 전체 공격 기술 검색입니다. 실제 습득 가능 기술 필터는 이후 추가할 수 있습니다.</div>
+</div><div class="spread-damage-control"><label class="spread-damage-toggle"><input id="offenseSpread" type="checkbox"/> 더블배틀 분산 데미지 ×0.75</label><div class="spread-damage-note" id="offenseSpreadNote">광역기가 동시에 2마리 이상을 공격할 때 체크합니다.</div></div>
+<div>
+<label for="offenseRank">공격/특공 랭크</label>
+<select id="offenseRank"></select>
+</div>
+<div class="sample-source-box">
+<div>
+<span>샘플 지닌 도구</span>
+<b id="offenseSampleItem">없음</b>
+</div>
+<div>
+<span>샘플 특성</span>
+<b id="offenseSampleAbility">-</b>
+</div>
+</div>
+<div class="wide">
+<div class="item-effect-note" id="offenseItemNote">왼쪽 현재 샘플의 도구와 특성을 자동 사용합니다.</div>
+</div>
+</div>
+<div class="offense-current-stat">
+<div>내 포켓몬<b id="offenseOwnPokemon">-</b></div>
+<div>사용 능력치<b id="offenseOwnStat">-</b></div>
+<div>현재 투자<b id="offenseOwnPoints">-</b></div>
+</div>
+</div>
+</div><div class="purpose-choice-label" id="offenseTargetChoiceLabel">
+<div>
+<strong>상대 내구 분석 선택</strong>
+<span>내 포켓몬 공격 설정을 마친 뒤 필요한 계산 방식만 선택합니다.</span>
+</div>
+</div><div aria-label="공격 분석 상대 내구 보기 방식" class="purpose-switch offense-purpose-switch" id="offenseTargetModeSwitch" role="tablist">
+<button aria-selected="true" class="purpose-tab active" data-offense-mode="detail" role="tab" type="button">
+<strong>상대 상세 계산</strong>
+<span>실제 상대 세팅 · 피해/타수 · 최소 A/C</span>
+</button>
+<button aria-selected="false" class="purpose-tab" data-offense-mode="benchmark" role="tab" type="button">
+<strong>내구 기준선</strong>
+<span>H0/H2/H32/풀내구 벤치마크만 비교</span>
+</button>
+</div><div class="offense-box offense-mode-detail offense-target-detail-box">
+<h4>상대 내구 상세 계산</h4>
+<p>실제 상대 샘플의 능력 포인트·성격·도구·특성·필드 조건을 넣어 피해를 정밀 계산합니다.</p>
+<div class="offense-form-grid">
+<div class="wide">
+<label for="offenseTargetSearch">상대 포켓몬 검색</label>
+<input aria-autocomplete="list" aria-controls="offenseTargetSearchHelper" autocomplete="off" data-search-helper-kind="battlePokemon" id="offenseTargetSearch" placeholder="한글 또는 영문 포켓몬명 검색" type="search"/><div aria-label="포켓몬 후보" class="search-helper" data-for="offenseTargetSearch" hidden="" id="offenseTargetSearchHelper" role="listbox"></div>
+</div>
+<div class="wide">
+<label for="offenseTargetSelect">상대 포켓몬</label>
+<select id="offenseTargetSelect"></select>
+</div>
+</div>
+<details class="offense-target-detail" open="">
+<summary>상대 내구 상세 설정</summary>
+<div class="offense-target-detail-body">
+<div class="offense-target-detail-grid">
+<div class="section-label">능력 포인트 / 성격</div>
+<div>
+<label for="offenseTargetHpPoints">HP 능력 포인트</label>
+<input id="offenseTargetHpPoints" max="32" min="0" step="1" type="number" value="32"/>
+</div>
+<div>
+<label for="offenseTargetNature">사용 방어 능력치 성격</label>
+<select id="offenseTargetNature">
+<option value="1">무보정 ×1.0</option>
+<option value="1.1">상승 보정 ×1.1</option>
+<option value="0.9">하락 보정 ×0.9</option>
+</select>
+</div>
+<div>
+<label for="offenseTargetDefPoints">방어 B</label>
+<input id="offenseTargetDefPoints" max="32" min="0" step="1" type="number" value="0"/>
+</div>
+<div>
+<label for="offenseTargetSpdPoints">특수방어 D</label>
+<input id="offenseTargetSpdPoints" max="32" min="0" step="1" type="number" value="0"/>
+</div>
+<div class="section-label">도구 / 특성 / 랭크</div>
+<div>
+<label for="offenseTargetItem">상대 지닌 도구</label>
+<select id="offenseTargetItem"></select>
+</div>
+<div>
+<label for="offenseTargetAbility">상대 특성</label>
+<select id="offenseTargetAbility"></select>
+</div>
+<div>
+<label for="offenseTargetDefRank">방어/특방 랭크</label>
+<select id="offenseTargetDefRank"></select>
+</div>
+<div>
+<label for="offenseTargetGrounded">접지 상태</label>
+<select id="offenseTargetGrounded">
+<option value="auto">자동</option>
+<option value="grounded">접지</option>
+<option value="airborne">비접지</option>
+</select>
+</div>
+<div class="section-label">진입 HP / 필드</div>
+<div>
+<label for="offenseTargetStartHp">진입 전 HP</label>
+<input id="offenseTargetStartHp" max="100" min="1" step="1" type="number" value="100"/>
+</div>
+<label class="compact-check">
+<input id="offenseTargetStealthRock" type="checkbox"/>
+                    상대 측 스텔스록
+                  </label>
+<div>
+<label for="offenseTargetSpikes">상대 측 압정</label>
+<select id="offenseTargetSpikes">
+<option value="0">없음</option>
+<option value="1">1장 · 1/8</option>
+<option value="2">2장 · 1/6</option>
+<option value="3">3장 · 1/4</option>
+</select>
+</div>
+<div>
+<label for="offenseWeather">날씨</label>
+<select id="offenseWeather">
+<option value="none">없음</option>
+<option value="sun">쾌청</option>
+<option value="rain">비</option>
+<option value="sand">모래바람</option>
+<option value="snow">설경</option>
+</select>
+</div>
+<div>
+<label for="offenseTerrain">필드</label>
+<select id="offenseTerrain">
+<option value="none">없음</option>
+<option value="electric">일렉트릭필드</option>
+<option value="grassy">그래스필드</option>
+<option value="psychic">사이코필드</option>
+<option value="misty">미스트필드</option>
+</select>
+</div>
+<div>
+<label for="offenseScreen">벽</label>
+<select id="offenseScreen">
+<option value="none">없음</option>
+<option value="reflect">리플렉터</option>
+<option value="lightscreen">빛의장막</option>
+<option value="auroraveil">오로라베일</option>
+</select>
+</div>
+</div>
+<div class="offense-target-summary">
+<div>최대 HP<b id="offenseDetailMaxHp">-</b></div>
+<div>원래 방어값<b id="offenseDetailRawDefense">-</b></div>
+<div>최종 방어값<b id="offenseDetailEffectiveDefense">-</b></div>
+<div>실효 내구지수<b id="offenseDetailBulkIndex">-</b></div>
+</div>
+<div class="offense-target-effect" id="offenseTargetEffectNote">
+                  도구와 특성을 선택하면 현재 계산에 반영되는 효과를 표시합니다.
+                </div>
+</div>
+</details>
+</div>
+<div class="offense-results offense-mode-detail">
+<div class="offense-result primary">
+<div class="caption">결정력 · 상성/상대 방어 제외</div>
+<div class="big" id="offensePowerIndex">-</div>
+<div class="sub" id="offensePowerDetail">-</div>
+</div>
+<div class="offense-result damage-percent-primary">
+<div class="caption">상대 최대 HP 대비 피해</div>
+<div class="big offense-percent-damage" id="offenseDamagePercent">-</div><div class="sub offense-raw-damage" id="offenseDamageRange">-</div>
+</div>
+<div class="offense-result">
+<div class="caption">타입 상성</div>
+<div class="big" id="offenseTypeMultiplier">×-</div>
+<div class="sub" id="offenseTypeDetail">-</div>
+</div>
+<div class="offense-result">
+<div class="caption">현재 타수 판정</div>
+<div class="offense-ko" id="offenseKoJudge">-</div>
+<div class="sub" id="offenseKoDetail">함정·회복·열매까지 포함</div>
+</div>
+</div>
+<div class="offense-target-state offense-mode-detail">
+<div>상대 최대 HP<b id="offenseTargetMaxHp">-</b></div>
+<div>진입 후 HP<b id="offenseTargetEntryHp">-</b></div>
+<div>사용 방어 능력치<b id="offenseTargetDefense">-</b></div>
+<div>1회 공격 후 HP<b id="offenseAfterOne">-</b></div>
+</div>
+<div class="offense-bulk-benchmark offense-mode-benchmark">
+<div class="offense-bulk-head">
+<div>
+<strong>상대 내구 기준선</strong>
+<p>선택한 기술의 현재 결정력과 가까운 Champions 포켓몬의 기본 내구선을 비교합니다.</p>
+</div>
+<div class="offense-bulk-tools">
+<select id="offenseBulkView">
+<option value="near">결정력 주변</option>
+<option value="all">전체 보기</option>
+</select>
+<select id="offenseBulkType">
+<option value="h0">무보정 · H0 / B·D0</option>
+<option value="h2">H2 · H2 / B·D0</option>
+<option selected="" value="h32">H32 · H32 / B·D0</option>
+<option value="full32">풀내구 · H32 / B·D32</option>
+</select>
+</div>
+</div>
+<div class="offense-bulk-current" id="offenseBulkCurrent">
+            현재 결정력 <b>-</b>
+</div>
+<div class="offense-bulk-list" id="offenseBulkList">
+<div class="offense-bulk-empty">기술 데이터를 불러오는 중입니다.</div>
+</div>
+<div class="offense-bulk-legend">
+            기준선은 모두 방어 성격 무보정입니다. H0 / H2 / H32는 방어·특방 0P,
+            풀내구는 H32P + 사용하는 B/D32P입니다. 내구지수는 물리기술이면 HP×방어, 특수기술이면 HP×특방입니다.
+            ‘확1 요구 결정력’은 아이템·특성·함정 없이 선택 기술의 타입 상성만 반영한 기준선입니다.
+            행을 누르면 해당 포켓몬과 투자 기준을 상대 방어 기준선에 적용합니다.
+          </div>
+</div>
+<div class="offense-goal offense-mode-detail">
+<div class="offense-goal-head">
+<strong>목표를 만족하는 최소 공격 투자</strong>
+<select id="offenseGoalHits">
+<option value="1">확정 1타</option>
+<option selected="" value="2">확정 2타</option>
+<option value="3">확정 3타</option>
+</select>
+</div>
+<div class="offense-goal-result">
+<div class="offense-goal-main">
+<div class="caption">현재 성격·도구·특성·상대 조건 유지</div>
+<div class="value" id="offenseMinPoints">-</div>
+<div class="detail" id="offenseMinDetail">기술과 상대를 선택하면 최소 A/C 능력 포인트를 계산합니다.</div>
+</div>
+<button class="offense-apply" disabled="" id="offenseApplyPoints" type="button">현재 샘플에 적용</button>
+</div>
+</div>
+<details class="offense-detail offense-mode-detail">
+<summary>내 공격 상세 조건 · 상태 / 급소 / 전체기 / 연속기 / 기타 보정</summary>
+<div class="offense-detail-grid">
+<div class="section-label">내 포켓몬 조건</div>
+<div>
+<label for="offenseStatus">상태</label>
+<select id="offenseStatus">
+<option value="none">정상</option>
+<option value="burn">화상</option>
+<option value="poison">독</option>
+<option value="paralysis">마비</option>
+</select>
+</div>
+<div>
+<label for="offenseGrounded">내 포켓몬 접지</label>
+<select id="offenseGrounded">
+<option value="auto">자동</option>
+<option value="grounded">접지</option>
+<option value="airborne">비접지</option>
+</select>
+</div>
+<label class="compact-check">
+<input id="offenseCritical" type="checkbox"/>
+              급소 기준
+            </label>
+<label class="compact-check">
+<input checked="" id="offenseAutoStab" type="checkbox"/>
+              자속 자동 적용
+            </label>
+<div>
+<label for="offenseExtraMultiplier">기타 공격 보정</label>
+<input id="offenseExtraMultiplier" max="4" min="0.1" step="0.05" type="number" value="1"/>
+</div>
+<div>
+<label for="offenseMultiHitCount">기술 1회당 타수</label>
+<select id="offenseMultiHitCount"><option value="1">1타</option></select>
+</div>
+<div>
+<label for="offenseFoulPlayRank">속임수 대상 공격 랭크</label>
+<select id="offenseFoulPlayRank"></select>
+</div>
+</div>
+</details>
+<div class="offense-warning offense-mode-detail" id="offenseWarning">
+          현재는 전체 공격 기술을 검색합니다. 상대 한 마리 기준의 샘플 조정용 계산기이며, 일부 가변 위력 기술은 경고를 표시합니다.
+        </div>
+</section>
+</details>
+<details class="analysis-fold" id="speedFold">
+<summary>
+<span class="analysis-fold-title">
+<strong>스피드 분석</strong>
+<span>추월 기준선 · 준속/최속 · 최소 S 능력 포인트</span>
+</span>
+</summary><div class="mobile-tab-screen-title"><div><strong>스피드 분석</strong><span>추월 기준선과 최소 S 계산</span></div></div>
+<section class="panel speed-panel full-speed-panel">
+<h3>스피드 기준선</h3>
+<p>Champions 기본 종과 메가진화 폼의 속도 기준선을 비교합니다. 기본 화면은 준속·최속이며, 무보정(S0)은 별도 기준으로 선택할 수 있습니다.</p>
+<div class="speed-search">
+<input aria-autocomplete="list" aria-controls="speedPokemonSearchHelper" autocomplete="off" data-search-helper-kind="speed" id="speedPokemonSearch" placeholder="비교할 포켓몬 검색 (한글 / 영문)" type="search"/><div aria-label="포켓몬 후보" class="search-helper" data-for="speedPokemonSearch" hidden="" id="speedPokemonSearchHelper" role="listbox"></div>
+</div>
+<div class="speed-tools">
+<select id="speedView">
+<option value="near">내 속도 주변</option>
+<option value="all">전체 보기</option>
+</select>
+<select id="speedType">
+<option value="both">준속 + 최속</option>
+<option value="neutral">준속만</option>
+<option value="positive">최속만</option>
+<option value="uninvested">무보정 (S0)만</option>
+</select>
+<select id="speedBenchmarkItem">
+<option value="none">기준선 도구 없음</option>
+<option value="choicescarf">구애스카프 ×1.5</option>
+<option value="ironball">검은철구 ×0.5</option>
+</select>
+</div>
+<div class="speed-status" id="speedStatus">Champions 데이터를 준비하는 중…</div>
+<div class="speed-list" id="speedList"></div>
+<div class="speed-target" id="speedTarget">
+<div class="caption">선택한 기준선</div>
+<div class="name">비교 대상을 선택하세요</div>
+<div class="result">다른 포켓몬의 기준선을 누르면 추월 최소 실능치와 S 능력 포인트를 계산합니다.</div>
+</div>
+<div class="source-note">기본 풀: Pokémon Champions 기본 종 + 현재 사용 가능한 메가진화 폼. 지역폼은 별도 단계에서 확장 예정.</div>
+</section>
+</details>
+</main>
+</div>
+</div>
+<nav aria-label="모바일 주요 메뉴" class="mobile-bottom-nav">
+<button aria-current="page" class="active" data-mobile-target="sample" type="button"><span>◆</span><b>샘플</b></button>
+<button class="" data-mobile-target="pokedexFold" type="button"><span>▤</span><b>도감</b></button>
+<button class="" data-mobile-target="sampleVaultFold" type="button"><span>▦</span><b>보관함</b></button>
+<button class="" data-mobile-target="durabilityFold" type="button"><span>◇</span><b>내구</b></button>
+<button class="" data-mobile-target="offenseFold" type="button"><span>▲</span><b>공격</b></button>
+<button class="" data-mobile-target="speedFold" type="button"><span>≫</span><b>속도</b></button>
+</nav>
+
+
+<div class="install-guide-modal" hidden="" id="installGuideModal">
+<div aria-labelledby="installGuideTitle" aria-modal="true" class="install-guide-card" role="dialog">
+<strong id="installGuideTitle">앱 설치 방법</strong>
+<div class="install-guide-body" id="installGuideBody"></div>
+<button id="installGuideClose" type="button">확인</button>
+</div>
+</div>
+<script src="./js/config.js"></script>
+<script src="./js/data-source.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>
